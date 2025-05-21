@@ -361,7 +361,11 @@ FAudioThread FAudio_PlatformCreateThread(
 
 void FAudio_PlatformWaitThread(FAudioThread thread, int32_t *retval)
 {
-	SDL_WaitThread((SDL_Thread*) thread, retval);
+	int status = 0;
+	SDL_WaitThread((SDL_Thread*) thread, &status);
+	if (retval) {
+		*retval = (int32_t)status;
+	}
 }
 
 void FAudio_PlatformThreadPriority(FAudioThreadPriority priority)
